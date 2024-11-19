@@ -6,7 +6,7 @@ import { fetchFromAPI } from "../utils/api";
 
 const Search = () => {
     const { searchId } = useParams();
-    const [videos, setVideos] = useState([]);
+    const [videos, setVideos] = useState([]); // 빈 배열로 초기화
     const [nextPageToken, setNextPageToken] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -21,7 +21,7 @@ const Search = () => {
         //     })
         //     .catch((error) => console.log(error));
 
-        setVideos([]);
+        setVideos([]); // 비워두기
         fetchVideos(searchId);
         setLoading(true);
     }, [searchId]);
@@ -30,7 +30,7 @@ const Search = () => {
         fetchFromAPI(`search?part=snippet&q=${query}&pageToken=${pageToken}`)
             .then((data) => {
                 setNextPageToken(data.nextPageToken);
-                setVideos((prevVideo) => [...prevVideo, ...data.items]);
+                setVideos((prevVideos) => [...prevVideos, ...data.items]); // 데이터를 배열에 추가
                 setLoading(false);
             })
             .catch((error) => {
@@ -48,7 +48,7 @@ const Search = () => {
     const searchPageClass = loading ? "isLoading" : "isLoaded";
 
     return (
-        <Main title="유투브 검색" description="유튜브 검색 결과 페이지입니다.">
+        <Main title="유≈투브 검색" description="유튜브 검색 결과 페이지입니다.">
             <section id="searchPage" className={searchPageClass}>
                 <h2>
                     🤠 <em>{searchId}</em> 검색 결과입니다.
